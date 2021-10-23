@@ -7,14 +7,22 @@
     </div>
 
     {{-- table --}}
+    <div class="d-flex justify-content-center">
+        <div class="card w-75">
+            @if (session()->has('message'))
+                <div class="alert alert-success text-center rounded-0">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ session('message') }}
+                </div>
+            @endif
 
-    <div class="row">
-        <div class="card mx-auto">
             <div class="card-header">
                 <a href="{{ route('users.create') }}" class="float-right">Create</a>
             </div>
-            <div class="card-body">
-                <table class="table">
+            <div class="table-responsive">
+                <table class="card-table table">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -29,7 +37,10 @@
                                 <th scope="row">{{ $user->id }}</th>
                                 <td>{{ $user->username }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>Edit/Delete</td>
+                                <td>
+                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-success">Edit</a>
+
+                                </td>
                             </tr>
                         @endforeach
 

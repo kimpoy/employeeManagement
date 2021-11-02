@@ -23,6 +23,7 @@ class UserStoreRequest extends FormRequest
      */
     public function rules()
     {
+        /* names here is the same to the names in the form */
         return [
             // validations
             'username' => ['required', 'string', 'max:255', 'unique:users'],

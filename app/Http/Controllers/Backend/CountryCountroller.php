@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CountryStoreRequest;
+use App\Http\Requests\CountryUpdateRequest;
 use App\Models\Country;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,7 @@ class CountryCountroller extends Controller
     {
         # code...
         Country::create($request->validated());
-        return redirect()->route('countries.index')->with('message','User Registered Successfully!');
+        return redirect()->route('countries.index')->with('message','Country Registered Successfully!');
     }
 
     public function show()
@@ -36,8 +37,29 @@ class CountryCountroller extends Controller
         # code...
     }
 
-    public function edit()
+    public function edit(Country $country)
     {
         # code...
+        return view('countries.edit', compact('country'));
+    }
+
+    public function update(CountryUpdateRequest $request, Country $country)
+    {
+        # code...
+        /* $country->update([
+            'country_code' => $request->country_code,
+            'name' => $request->name,
+        ]); */
+
+        $country->update($request->validated());
+
+        return redirect()->route('countries.index')->with('message', 'Country Updated Successfully');
+
+    }
+
+    public function destroy(Country $country)
+    {
+        $country->delete();
+        return redirect()->route('countries.index')->with('message', "{$country->name} Deleted Successfully");
     }
 }

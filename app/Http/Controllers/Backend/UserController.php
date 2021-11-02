@@ -16,10 +16,17 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //* pass value from db to view
         $users = User::all();
+
+        //* for searching username or email
+        if($request->has('search')){
+            $users = User::where('username', 'like', "%{$request->search}%")->orWhere('email', 'like', "%{$request->search}%")->get();
+        }
+
+
         //* returns the view
         return view('users.index', compact('users'));
 
@@ -89,7 +96,7 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        //
+
         $user->update([
             'username' => $request->username,
             'first_name' => $request->first_name,
